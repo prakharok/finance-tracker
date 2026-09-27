@@ -1,0 +1,10 @@
+.page { max-width: 720px; margin: 0 auto; padding: 32px 24px; }
+.panel {
+  background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 24px; margin-bottom: 24px;
+}
+.info-row {
+  display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px;
+}
+.info-row span { color: #64748b; }
+.actions { display: flex; gap: 12px; margin-top: 20px; }
+.cp-form { max-width: 360px; margin-top: 16px; }

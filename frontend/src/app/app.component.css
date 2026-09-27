@@ -1,0 +1,17 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 32px;
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+}
+.navbar-brand { font-weight: 700; font-size: 18px; }
+.navbar-links a {
+  margin-left: 24px;
+  text-decoration: none;
+  color: #64748b;
+  font-weight: 600;
+  font-size: 14px;
+}
+.navbar-links a.active, .navbar-links a:hover { color: #2563eb; }

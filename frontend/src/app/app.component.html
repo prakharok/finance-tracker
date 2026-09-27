@@ -1,0 +1,8 @@
+<nav class="navbar" *ngIf="auth.isLoggedIn">
+  <div class="navbar-brand">💰 Finance Tracker</div>
+  <div class="navbar-links">
+    <a routerLink="/home" routerLinkActive="active">Home</a>
+    <a routerLink="/profile" routerLinkActive="active">Profile</a>
+  </div>
+</nav>
+<router-outlet></router-outlet>

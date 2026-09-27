@@ -1,0 +1,45 @@
+<div class="page">
+  <h1>Profile</h1>
+
+  <div class="panel" *ngIf="loading">Loading profile...</div>
+  <div class="alert error" *ngIf="loadError">{{ loadError }}</div>
+
+  <div class="panel" *ngIf="profile">
+    <div class="info-row"><span>Username</span><strong>{{ profile.username }}</strong></div>
+    <div class="info-row"><span>Email</span><strong>{{ profile.email }}</strong></div>
+    <div class="info-row"><span>Password</span><strong>••••••••</strong></div>
+
+    <div class="actions">
+      <button class="btn secondary" style="width:auto;padding:10px 18px;" (click)="startChangePassword()" *ngIf="!changingPassword">
+        Change Password
+      </button>
+      <button class="btn danger" style="width:auto;padding:10px 18px;" (click)="logout()">Logout</button>
+    </div>
+  </div>
+
+  <div class="panel" *ngIf="changingPassword">
+    <h3>Change Password</h3>
+    <div class="alert error" *ngIf="cpError">{{ cpError }}</div>
+    <div class="alert success" *ngIf="cpSuccess">{{ cpSuccess }}</div>
+
+    <button class="btn" style="width:auto;padding:10px 18px;" (click)="requestOtp()" *ngIf="step === 'idle'">
+      Send OTP to my email
+    </button>
+
+    <form *ngIf="step === 'otp-sent'" (ngSubmit)="confirmChangePassword()" class="cp-form">
+      <div class="field">
+        <label>OTP</label>
+        <input type="text" [(ngModel)]="otp" name="otp" maxlength="6" required />
+      </div>
+      <div class="field">
+        <label>New Password</label>
+        <input type="password" [(ngModel)]="newPassword" name="newPassword" required minlength="6" />
+      </div>
+      <div class="field">
+        <label>Confirm New Password</label>
+        <input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" required />
+      </div>
+      <button class="btn" type="submit" style="width:auto;padding:10px 18px;">Confirm Change</button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,70 @@
+<div class="page">
+  <h1>Finance Tracker</h1>
+
+  <!-- Add transaction -->
+  <div class="panel">
+    <h3>Add Transaction</h3>
+    <div class="alert error" *ngIf="addError">{{ addError }}</div>
+    <form class="add-form" (ngSubmit)="addTransaction()">
+      <select [(ngModel)]="form.type" name="type">
+        <option value="Income">Income</option>
+        <option value="Expense">Expense</option>
+      </select>
+      <input type="text" placeholder="Description" [(ngModel)]="form.description" name="description" />
+      <input type="number" placeholder="Amount" [(ngModel)]="form.amount" name="amount" min="0" step="0.01" />
+      <button class="btn" type="submit" [disabled]="adding" style="width:auto;padding:10px 22px;">
+        {{ adding ? 'Adding...' : 'Add' }}
+      </button>
+    </form>
+  </div>
+
+  <!-- Filters -->
+  <div class="panel">
+    <h3>Recent Transactions</h3>
+    <div class="filters">
+      <select [(ngModel)]="filterType" name="filterType">
+        <option value="">All Types</option>
+        <option value="Income">Income</option>
+        <option value="Expense">Expense</option>
+      </select>
+      <label>From <input type="date" [(ngModel)]="dateFrom" name="dateFrom" /></label>
+      <label>To <input type="date" [(ngModel)]="dateTo" name="dateTo" /></label>
+      <input type="number" placeholder="Min amount" [(ngModel)]="minAmount" name="minAmount" />
+      <input type="number" placeholder="Max amount" [(ngModel)]="maxAmount" name="maxAmount" />
+      <button class="btn" style="width:auto;padding:8px 16px;" (click)="applyFilters()">Apply</button>
+      <button class="btn secondary" style="width:auto;padding:8px 16px;" (click)="clearFilters()">Clear</button>
+    </div>
+
+    <div class="alert error" *ngIf="listError">{{ listError }}</div>
+
+    <table>
+      <thead>
+        <tr>
+          <th (click)="changeSort('type')" class="sortable">Type {{ sortBy === 'type' ? (order === 'asc' ? '▲' : '▼') : '' }}</th>
+          <th>Description</th>
+          <th (click)="changeSort('amount')" class="sortable">Amount {{ sortBy === 'amount' ? (order === 'asc' ? '▲' : '▼') : '' }}</th>
+          <th (click)="changeSort('date')" class="sortable">Date {{ sortBy === 'date' ? (order === 'asc' ? '▲' : '▼') : '' }}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let tx of transactions">
+          <td><span class="badge" [ngClass]="tx.type">{{ tx.type }}</span></td>
+          <td>{{ tx.description }}</td>
+          <td>{{ tx.amount | number: '1.2-2' }}</td>
+          <td>{{ tx.date | date: 'mediumDate' }}</td>
+          <td><a class="delete-link" (click)="deleteTransaction(tx._id)">Delete</a></td>
+        </tr>
+        <tr *ngIf="!loading && transactions.length === 0">
+          <td colspan="5" style="text-align:center;color:#94a3b8;">No transactions found</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="pagination" *ngIf="totalPages > 1">
+      <button [disabled]="page === 1" (click)="goToPage(page - 1)">Prev</button>
+      <span>Page {{ page }} of {{ totalPages }} ({{ total }} total)</span>
+      <button [disabled]="page === totalPages" (click)="goToPage(page + 1)">Next</button>
+    </div>
+  </div>
+</div>
